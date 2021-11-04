@@ -1,19 +1,17 @@
 package com.example.btl_music4b.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.btl_music4b.Adapter.DanhsachbaihatAdapter;
 import com.example.btl_music4b.Adapter.dsbhthuvienplaylistAdapter;
@@ -27,9 +25,8 @@ import com.example.btl_music4b.Model.PlaylistModel;
 import com.example.btl_music4b.Model.ThinhHanhModel;
 import com.example.btl_music4b.Model.ThuVienPlayListModel;
 import com.example.btl_music4b.R;
-import com.example.btl_music4b.Service.APIService;
-import com.example.btl_music4b.Service.Dataservice;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.example.btl_music4b.Service_API.APIService;
+import com.example.btl_music4b.Service_API.Dataservice;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -41,8 +38,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DanhsachbaihatActivity extends AppCompatActivity {
-    CoordinatorLayout coordinatorLayout;
-    CollapsingToolbarLayout collapsingToolbarLayout;
     androidx.appcompat.widget.Toolbar toolbar;
     RecyclerView recyclerViewdanhsachbaihat;
     FloatingActionButton floatingActionButton;
@@ -275,8 +270,6 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
-        coordinatorLayout = findViewById(R.id.coordinatorlayout);
-        collapsingToolbarLayout = findViewById(R.id.collapsingtoolbar);
         toolbar = findViewById(R.id.toolbardanhsachbaihat);
         recyclerViewdanhsachbaihat = findViewById(R.id.recyclerviewdanhsachbaihat);
         imgdanhsachcakhuc = findViewById(R.id.imageviewdanhsachcakhuc);
@@ -330,13 +323,23 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DanhsachbaihatActivity.this, PlayNhacActivity.class);
-
                 if (mangbaihat!=null){
-                    intent.putExtra("cacbaihat", mangbaihat);
-                }else {
-                    intent.putExtra("cacbaihatthuvien", mangbaihatthuvienplaylist);
+                    if (mangbaihat.size() > 0){
+                        intent.putExtra("cacbaihat", mangbaihat);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(DanhsachbaihatActivity.this, "Danh sách không có bài hát nào cả :(", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    if (mangbaihatthuvienplaylist != null){
+                        if (mangbaihatthuvienplaylist.size() > 0){
+                            intent.putExtra("cacbaihatthuvien", mangbaihatthuvienplaylist);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(DanhsachbaihatActivity.this, "Danh sách không có bài hát nào cả :(", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
-                startActivity(intent);
             }
         });
     }

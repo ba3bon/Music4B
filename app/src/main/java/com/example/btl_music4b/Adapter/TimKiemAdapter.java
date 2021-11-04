@@ -41,7 +41,7 @@ public class TimKiemAdapter extends RecyclerView.Adapter<TimKiemAdapter.ViewHold
         BaiHatModel baiHat = mangbaihat.get(position);
         holder.txttentimkiem.setText(baiHat.getTenBaiHat());
         holder.txtcasitimkiem.setText(baiHat.getTenCaSi());
-        Picasso.get(/*context*/).load(baiHat.getHinhBaiHat()).into(holder.imganhtimkiem);
+        Picasso.get().load(baiHat.getHinhBaiHat()).into(holder.imganhtimkiem);
     }
 
     @Override

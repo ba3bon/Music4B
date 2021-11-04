@@ -43,6 +43,7 @@ public class Fragment_Profile extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DangKyActivity.class);
                 startActivity(intent);
+                hm.finish();
             }
         });
         return  view;

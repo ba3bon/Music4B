@@ -20,8 +20,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.btl_music4b.Activity.DangKyActivity;
 import com.example.btl_music4b.Model.ResponseModel;
 import com.example.btl_music4b.R;
-import com.example.btl_music4b.Service.APIService;
-import com.example.btl_music4b.Service.Dataservice;
+import com.example.btl_music4b.Service_API.APIService;
+import com.example.btl_music4b.Service_API.Dataservice;
 
 import retrofit2.Call;
 import retrofit2.Callback;

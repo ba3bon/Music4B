@@ -19,8 +19,8 @@ import com.example.btl_music4b.Activity.PlayNhacActivity;
 import com.example.btl_music4b.Model.BaiHatThuVienPlayListModel;
 import com.example.btl_music4b.Model.ResponseModel;
 import com.example.btl_music4b.R;
-import com.example.btl_music4b.Service.APIService;
-import com.example.btl_music4b.Service.Dataservice;
+import com.example.btl_music4b.Service_API.APIService;
+import com.example.btl_music4b.Service_API.Dataservice;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

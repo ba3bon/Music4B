@@ -94,7 +94,7 @@
         android:textColor="#ffffff"
         android:fontFamily="@font/arimo_bold"
         android:textSize="24sp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/plus_50px"
         android:text="+"
@@ -115,7 +115,6 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 
-
     <ImageView
         android:background="@drawable/back"
         android:elevation="6dp"
@@ -123,7 +122,6 @@
         android:layout_marginTop="17dp"
         android:layout_width="20dp"
         android:layout_height="20dp"/>
-
     <ImageView
         android:id="@+id/imageviewdanhsachcakhuc"
         android:layout_width="250dp"

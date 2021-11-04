@@ -9,7 +9,6 @@
     android:background="@drawable/bgr_playnhac"
     android:orientation="vertical"
     tools:context=".Activity.PlayNhacActivity">
-
     <ImageView
         android:id="@+id/imageGradient"
         android:layout_width="match_parent"
@@ -173,7 +172,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="3dp"
-        android:elevation="0dp"
         android:background="#00FFFFFF"
         android:gravity="center_horizontal"
         android:minHeight="?attr/actionBarSize"
@@ -181,5 +179,7 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextColor="#ffffff"
+        app:titleTextColor="#ffffff" />
 </androidx.constraintlayout.widget.ConstraintLayout>

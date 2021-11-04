@@ -1,19 +1,14 @@
 package com.example.btl_music4b.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.FragmentTransaction;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.btl_music4b.Adapter.MainViewPagerAdapter;
@@ -23,6 +18,7 @@ import com.example.btl_music4b.Fragment.Fragment_Tim_Kiem;
 import com.example.btl_music4b.Fragment.Fragment_Trang_Chu;
 import com.example.btl_music4b.Fragment.LoadingDialog;
 import com.example.btl_music4b.R;
+import com.example.btl_music4b.Service_Local.ForegroundServiceControl;
 import com.google.android.material.tabs.TabLayout;
 
 public class HomeActivity extends AppCompatActivity {
@@ -74,6 +70,10 @@ public class HomeActivity extends AppCompatActivity {
         }
         backPressTime = System.currentTimeMillis();
     }
+    public void StopService(){
+        Intent intent = new Intent(this, ForegroundServiceControl.class);
+        stopService(intent);
+    }
 
     private void init() {
         MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
@@ -104,6 +104,12 @@ public class HomeActivity extends AppCompatActivity {
             email = cursor.getString(4);
             url = cursor.getString(5);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        StopService();
     }
 
     public String getTaikhoan() {

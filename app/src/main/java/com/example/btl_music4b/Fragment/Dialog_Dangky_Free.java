@@ -17,8 +17,8 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.btl_music4b.Model.ResponseModel;
 import com.example.btl_music4b.R;
-import com.example.btl_music4b.Service.APIService;
-import com.example.btl_music4b.Service.Dataservice;
+import com.example.btl_music4b.Service_API.APIService;
+import com.example.btl_music4b.Service_API.Dataservice;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Properties;
@@ -67,37 +67,39 @@ public class Dialog_Dangky_Free extends AppCompatDialogFragment {
         btngetmadangky.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                aceptmail = false;
-                final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
-                loadingDialog.StartLoadingDialog();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingDialog.dismissDialog();
-                    }
-                }, 5000);
+                if(setInterval() < 1){
+                    aceptmail = false;
+                    final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+                    loadingDialog.StartLoadingDialog();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingDialog.dismissDialog();
+                        }
+                    }, 5000);
 
-                email = emaildangky.getEditText().getText().toString().trim();
-                EmailValidator validator = new EmailValidator();
+                    email = emaildangky.getEditText().getText().toString().trim();
+                    EmailValidator validator = new EmailValidator();
 
-                if (email.trim().length() < 6 || email.trim().length() > 36){
-                    Toast.makeText(getActivity(), "Độ dài email từ 6 -> 36 ký tự", Toast.LENGTH_LONG).show();
-                }else {
-                    if (validator.validate(email)) {
-                        checkEmail(emaildangky.getEditText().getText().toString().trim());
-                    } else {
-                        Toast.makeText(getActivity(), "Email không đúng định dạng", Toast.LENGTH_LONG).show();
-                    }
-                }
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (aceptmail){
-                            senMail(email);
+                    if (email.trim().length() < 6 || email.trim().length() > 36){
+                        Toast.makeText(getActivity(), "Độ dài email từ 6 -> 36 ký tự", Toast.LENGTH_LONG).show();
+                    }else {
+                        if (validator.validate(email)) {
+                            checkEmail(emaildangky.getEditText().getText().toString().trim());
+                        } else {
+                            Toast.makeText(getActivity(), "Email không đúng định dạng", Toast.LENGTH_LONG).show();
                         }
                     }
-                }, 3000);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (aceptmail){
+                                senMail(email);
+                            }
+                        }
+                    }, 3000);
+                }
             }
         });
 
@@ -154,51 +156,12 @@ public class Dialog_Dangky_Free extends AppCompatDialogFragment {
 
         return builder.create();
     }
-    public void checkUser(String us) {
-        Dataservice dataservice = APIService.getService();
-        Call<ResponseModel> callback = dataservice.checkusername(us);
-        callback.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                ResponseModel responseBody = response.body();
-                if (responseBody != null) {
-                    if (responseBody.getSuccess().equals("1")) {
-                        Toast.makeText(getActivity(), "Tài khoản đã được sử dụng", Toast.LENGTH_SHORT).show();
-                    } else {
-                        accept = true;
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-            }
-
-        });
+    private static final int setInterval() {
+        if (interval == 1){
+            timer.cancel();
+        }
+        return --interval;
     }
-    public void checkEmail(String em) {
-        Dataservice dataservice = APIService.getService();
-        Call<ResponseModel> callback = dataservice.checkemail(em);
-        callback.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                ResponseModel responseBody = response.body();
-                if (responseBody != null) {
-                    if (responseBody.getSuccess().equals("1")) {
-                        Toast.makeText(getActivity(), "email đã được sử dụng", Toast.LENGTH_SHORT).show();
-                    } else {
-                        aceptmail = true;
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-            }
-
-        });
-    }
-
     private void senMail(String emaildangky){
         final String email = "music4bverify@gmail.com";
         final  String password = "@Abc123456";
@@ -244,11 +207,49 @@ public class Dialog_Dangky_Free extends AppCompatDialogFragment {
             Toast.makeText(getActivity(), "Lỗi kết nối, hãy thử lại sau", Toast.LENGTH_SHORT).show();
         }
     }
-    private static final int setInterval() {
-        if (interval == 1){
-            timer.cancel();
-        }
-        return --interval;
+    public void checkUser(String us) {
+        Dataservice dataservice = APIService.getService();
+        Call<ResponseModel> callback = dataservice.checkusername(us);
+        callback.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                ResponseModel responseBody = response.body();
+                if (responseBody != null) {
+                    if (responseBody.getSuccess().equals("1")) {
+                        Toast.makeText(getActivity(), "Tài khoản đã được sử dụng", Toast.LENGTH_SHORT).show();
+                    } else {
+                        accept = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            }
+
+        });
+    }
+    public void checkEmail(String em) {
+        Dataservice dataservice = APIService.getService();
+        Call<ResponseModel> callback = dataservice.checkemail(em);
+        callback.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                ResponseModel responseBody = response.body();
+                if (responseBody != null) {
+                    if (responseBody.getSuccess().equals("1")) {
+                        Toast.makeText(getActivity(), "email đã được sử dụng", Toast.LENGTH_SHORT).show();
+                    } else {
+                        aceptmail = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            }
+
+        });
     }
 
     @Override

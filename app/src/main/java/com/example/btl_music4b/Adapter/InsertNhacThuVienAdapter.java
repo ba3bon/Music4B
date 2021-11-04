@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.btl_music4b.Model.BaiHatModel;
 import com.example.btl_music4b.Model.ResponseModel;
 import com.example.btl_music4b.R;
-import com.example.btl_music4b.Service.APIService;
-import com.example.btl_music4b.Service.Dataservice;
+import com.example.btl_music4b.Service_API.APIService;
+import com.example.btl_music4b.Service_API.Dataservice;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

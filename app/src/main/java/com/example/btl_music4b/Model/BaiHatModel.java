@@ -6,7 +6,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BaiHatModel implements Parcelable{
+import java.io.Serializable;
+
+public class BaiHatModel implements Parcelable {
     @SerializedName("IdBaiHat")
     @Expose
     private int idBaiHat;
@@ -23,7 +25,7 @@ public class BaiHatModel implements Parcelable{
     @Expose
     private String linkBaiHat;
 
-    public BaiHatModel(int idBaiHat, String tenBaiHat, String hinhBaiHat, String tenCaSi, String linkBaiHat, String luotThich) {
+    public BaiHatModel(int idBaiHat, String tenBaiHat, String hinhBaiHat, String tenCaSi, String linkBaiHat) {
         this.idBaiHat = idBaiHat;
         this.tenBaiHat = tenBaiHat;
         this.hinhBaiHat = hinhBaiHat;

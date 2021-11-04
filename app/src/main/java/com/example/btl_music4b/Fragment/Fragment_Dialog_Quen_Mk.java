@@ -3,7 +3,6 @@ package com.example.btl_music4b.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.btl_music4b.Model.NguoiDungModel;
 import com.example.btl_music4b.R;
-import com.example.btl_music4b.Service.APIService;
-import com.example.btl_music4b.Service.Dataservice;
+import com.example.btl_music4b.Service_API.APIService;
+import com.example.btl_music4b.Service_API.Dataservice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,31 +65,33 @@ public class Fragment_Dialog_Quen_Mk extends Fragment {
         btngetma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acceptgetcode = false;
-                txtmes.setVisibility(View.GONE);
-                final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
-                loadingDialog.StartLoadingDialog();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingDialog.dismissDialog();
-                    }
-                }, 5000);
-
-                taikhoan = editTextTaiKhoan.getText().toString().trim();
-                if(taikhoan.trim().length() < 6 || taikhoan.trim().length() > 36){
-                    Toast.makeText(getActivity(), "Độ dài tài khoản từ 6 -> 36 ký tự", Toast.LENGTH_SHORT).show();
-                }else {
-                    GetDataUser(taikhoan);
-                    new Handler().postDelayed(new Runnable() {
+                if(setInterval() < 1){
+                    acceptgetcode = false;
+                    txtmes.setVisibility(View.GONE);
+                    final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+                    loadingDialog.StartLoadingDialog();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if (acceptgetcode){
-                                senMail(emailuser);
-                            }
+                            loadingDialog.dismissDialog();
                         }
-                    }, 3000);
+                    }, 5000);
+
+                    taikhoan = editTextTaiKhoan.getText().toString().trim();
+                    if(taikhoan.trim().length() < 6 || taikhoan.trim().length() > 36){
+                        Toast.makeText(getActivity(), "Độ dài tài khoản từ 6 -> 36 ký tự", Toast.LENGTH_SHORT).show();
+                    }else {
+                        GetDataUser(taikhoan);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (acceptgetcode){
+                                    senMail(emailuser);
+                                }
+                            }
+                        }, 3000);
+                    }
                 }
             }
 
